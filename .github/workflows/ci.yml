@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --no-tests=error
+
+  pdf:
+    name: PDF
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: typst-community/setup-typst@v5
+        with:
+          typst-version: '0.15.1'
+      - name: Build PDF
+        run: |
+          mkdir -p build/document
+          typst compile --root . trd.typ build/document/trd.pdf
+      - name: Upload PDF
+        uses: actions/upload-artifact@v7
+        with:
+          name: trd-pdf
+          path: build/document/trd.pdf
+          if-no-files-found: error
