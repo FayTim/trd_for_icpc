@@ -16,6 +16,12 @@ algorithms/
     example.cpp                # компилируемый пример использования
     test.cpp                   # тесты реализации
     CMakeLists.txt              # цели сборки и регистрация теста в CTest
+  compress_coordinates/
+    description.typ            # сжатие координат: описание и листинги
+    compress_coordinates.h     # самостоятельная реализация
+    example.cpp                # компилируемый пример использования
+    test.cpp                   # тесты прямого и обратного отображения
+    CMakeLists.txt              # цели сборки и регистрация теста в CTest
 CMakeLists.txt                 # подключение модулей с тестами
 .github/workflows/ci.yml        # тесты и PDF для PR и main
 ```
@@ -31,7 +37,8 @@ cmake --build build --parallel
 ctest --test-dir build --output-on-failure
 ```
 
-Вместе с тестами компилируется пример `fixed_set_example`.
+Вместе с тестами компилируются примеры `fixed_set_example` и
+`compress_coordinates_example`.
 
 ## Сборка документа
 
