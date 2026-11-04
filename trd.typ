@@ -1,37 +1,22 @@
-= TRD
-== Z-функция
-```cpp
-template <typename T>
-std::vector<int> z_function(const T& a) {
-    int n = (int)a.size();
-    std::vector<int> z(n, 0);
-    if (n == 0) return z;
+#set document(title: "ICPC Team Reference Document")
+#set page(paper: "a4", margin: 18mm, numbering: "1")
+#set text(font: "Libertinus Serif", size: 10pt, lang: "ru")
+#set heading(numbering: "1.1")
+#show raw: set text(font: "DejaVu Sans Mono")
+#show raw.where(block: true): set block(breakable: true)
+#show raw.where(block: true): set par(leading: 0.45em)
 
-    z[0] = n;
-    int l = 0, r = 0;
+#align(center)[
+  #text(size: 18pt, weight: "bold")[ICPC Team Reference Document]
+]
 
-    for (int i = 1; i < n; ++i) {
-        if (i < r) {
-            z[i] = std::min(r - i, z[i - l]);
-        }
-        while (i + z[i] < n && a[z[i]] == a[i + z[i]]) {
-            z[i]++;
-        }
-        if (i + z[i] > r) {
-            l = i;
-            r = i + z[i];
-        }
-    }
+#outline(title: [Содержание], depth: 2)
 
-    return z;
-}
-```
-Z-функция для каждой позиции $i$ показывает, какой длины префикс строки совпадает с подстрокой, начинающейся в этой позиции
+= Структуры данных
 
-*Главные применения*:
-1. Поиск подстроки: Найти все вхождения шаблона $P$ в текст $T$ за $O(|P| + |T|)$. Для этого считают Z-функцию от строки $P + \# + T$.
-2. Периодичность: Быстро найти наименьший период строки или проверить, состоит ли строка из повторений одного блока.
-3. Подсчет различных подстрок: Используется в алгоритмах сжатия и анализа строк.
+#include "algorithms/fixed_set/description.typ"
 
-Время: $O(n)$
-Память: $O(n)$
+= Алгоритмы на стрроки
+
+#include "algorithms/z_function/description.typ"
+#include "algorithms/polynomial_hashes/description.typ"
