@@ -37,7 +37,7 @@ ctest --test-dir build --output-on-failure
 
 ```sh
 sudo apt-get update
-sudo apt-get install --no-install-recommends python3 pandoc texlive-xetex texlive-latex-extra texlive-lang-cyrillic fonts-dejavu
+sudo apt-get install --no-install-recommends python3 pandoc texlive-xetex texlive-latex-extra texlive-lang-cyrillic fonts-dejavu lmodern
 python3 scripts/build_document.py --pdf
 ```
 
