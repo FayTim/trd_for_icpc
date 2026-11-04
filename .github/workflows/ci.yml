@@ -28,12 +28,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
-      - name: Install PDF dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install --no-install-recommends -y pandoc texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-fonts-recommended fonts-dejavu lmodern
+      - uses: typst-community/setup-typst@v5
+        with:
+          typst-version: '0.15.1'
       - name: Build PDF
-        run: python3 scripts/build_document.py --pdf
+        run: |
+          mkdir -p build/document
+          typst compile --root . trd.typ build/document/trd.pdf
       - name: Upload PDF
         uses: actions/upload-artifact@v7
         with:
