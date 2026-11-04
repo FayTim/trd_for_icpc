@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        run: ctest --test-dir build --output-on-failure --no-tests=error
+
+  pdf:
+    name: PDF
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y pandoc texlive-xetex texlive-latex-extra texlive-lang-cyrillic fonts-dejavu
+      - name: Build PDF
+        run: python3 scripts/build_document.py --pdf
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: trd-pdf
+          path: build/document/trd.pdf
+          if-no-files-found: error
