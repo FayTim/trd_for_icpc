@@ -31,7 +31,7 @@ jobs:
       - name: Install PDF dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install --no-install-recommends -y pandoc texlive-xetex texlive-latex-extra texlive-lang-cyrillic fonts-dejavu lmodern
+          sudo apt-get install --no-install-recommends -y pandoc texlive-xetex texlive-latex-extra texlive-lang-cyrillic texlive-fonts-recommended fonts-dejavu lmodern
       - name: Build PDF
         run: python3 scripts/build_document.py --pdf
       - name: Upload PDF
