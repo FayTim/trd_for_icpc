@@ -7,3 +7,5 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 enable_testing()
 add_subdirectory(algorithms/fixed_set)
+add_subdirectory(algorithms/z_function)
+add_subdirectory(algorithms/polynomial_hashes)

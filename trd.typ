@@ -15,3 +15,8 @@
 = Структуры данных
 
 #include "algorithms/fixed_set/description.typ"
+
+= Алгоритмы на стрроки
+
+#include "algorithms/z_function/description.typ"
+#include "algorithms/polynomial_hashes/description.typ"
