@@ -15,3 +15,9 @@
 = Структуры данных
 
 #include "algorithms/fixed_set/description.typ"
+
+#pagebreak(weak: true)
+
+= Алгоритмические приёмы
+
+#include "algorithms/compress_coordinates/description.typ"
