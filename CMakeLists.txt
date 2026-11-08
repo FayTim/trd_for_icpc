@@ -7,3 +7,5 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 enable_testing()
 add_subdirectory(algorithms/fixed_set)
+add_subdirectory(algorithms/scc)
+add_subdirectory(algorithms/two_sat)
