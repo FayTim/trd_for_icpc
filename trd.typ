@@ -15,3 +15,6 @@
 = Структуры данных
 
 #include "algorithms/fixed_set/description.typ"
+
+#pagebreak(weak: true)
+#include "algorithms/segment_tree/description.typ"
