@@ -16,7 +16,7 @@
 
 #include "algorithms/fixed_set/description.typ"
 
-= Алгоритмы на стрроки
+= Алгоритмы на строки
 
 #include "algorithms/z_function/description.typ"
 #include "algorithms/polynomial_hashes/description.typ"
