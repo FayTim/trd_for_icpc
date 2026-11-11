@@ -15,3 +15,13 @@
 = Структуры данных
 
 #include "algorithms/fixed_set/description.typ"
+
+#pagebreak(weak: true)
+
+= Динамическое программирование
+
+#[
+  #show raw.where(block: true): set par(leading: 0.25em)
+  #include "algorithms/knapsack_01/description.typ"
+  #include "algorithms/reachable_sums/description.typ"
+]

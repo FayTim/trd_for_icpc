@@ -7,3 +7,5 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 enable_testing()
 add_subdirectory(algorithms/fixed_set)
+add_subdirectory(algorithms/knapsack_01)
+add_subdirectory(algorithms/reachable_sums)
