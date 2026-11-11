@@ -27,10 +27,13 @@ class TwoSat {
   // Чтобы x_i был ложным: ForceTrue(Literal(i, false)).
   void ForceTrue(int a) { AddOr(a, a); }
 
+  // Литералы a, b не могут быть истинными одновременно; оба ложных допустимы.
+  void AddAtMostOne(int a, int b) { AddOr(a ^ 1, b ^ 1); }
+
   // Истинен ровно один из литералов a, b.
   void AddExactlyOne(int a, int b) {
     AddOr(a, b);
-    AddOr(a ^ 1, b ^ 1);
+    AddAtMostOne(a, b);
   }
 
   // nullopt — решения нет; иначе answer[i] — значение ПЕРЕМЕННОЙ x_i.

@@ -8,7 +8,7 @@
 
 namespace {
 
-enum class Operation { Or, Implication, Force, ExactlyOne };
+enum class Operation { Or, Implication, Force, ExactlyOne, AtMostOne };
 
 struct Constraint {
   Operation operation;
@@ -40,6 +40,8 @@ bool Satisfied(const Constraint& constraint,
       return a;
     case Operation::ExactlyOne:
       return a != b;
+    case Operation::AtMostOne:
+      return !(a && b);
   }
   throw std::runtime_error("Unknown operation");
 }
@@ -67,6 +69,9 @@ void Apply(TwoSat& solver, const Constraint& constraint) {
       break;
     case Operation::ExactlyOne:
       solver.AddExactlyOne(constraint.a, constraint.b);
+      break;
+    case Operation::AtMostOne:
+      solver.AddAtMostOne(constraint.a, constraint.b);
       break;
   }
 }
@@ -124,7 +129,7 @@ void TestLiteralEncodingAndEmptyFormula() {
 void TestEveryHelperTruthTable() {
   const std::vector<Operation> operations{
       Operation::Or, Operation::Implication, Operation::Force,
-      Operation::ExactlyOne};
+      Operation::ExactlyOne, Operation::AtMostOne};
   // Pin each assignment of two variables independently. This checks all signed
   // literal pairs, equal/complementary literals, and implication contraposition.
   for (Operation operation : operations) {
@@ -161,7 +166,7 @@ void TestRepeatedSolveWithNewConstraints() {
       {Operation::Implication, TwoSat::Literal(1), TwoSat::Literal(2)},
       {Operation::Force, TwoSat::Literal(0, false), TwoSat::Literal(0, false)},
       // The previous clauses now force x1=true and x2=true.
-      {Operation::Force, TwoSat::Literal(2, false), TwoSat::Literal(2, false)},
+      {Operation::AtMostOne, TwoSat::Literal(1), TwoSat::Literal(2)},
       {Operation::Or, TwoSat::Literal(0), TwoSat::Literal(0, false)}};
   for (const Constraint& constraint : additions) {
     Apply(solver, constraint);
@@ -178,7 +183,7 @@ void TestRepeatedSolveWithNewConstraints() {
 
 void TestRandomFormulasAgainstBruteForce() {
   std::mt19937 generator(0x2A7);
-  std::uniform_int_distribution<int> operation_distribution(0, 3);
+  std::uniform_int_distribution<int> operation_distribution(0, 4);
   std::uniform_int_distribution<int> count_distribution(0, 30);
   for (int variables = 1; variables <= 8; ++variables) {
     std::uniform_int_distribution<int> literal_distribution(0, 2 * variables - 1);
