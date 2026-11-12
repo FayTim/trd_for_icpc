@@ -22,6 +22,10 @@
 
 #pagebreak(weak: true)
 
+#include "algorithms/fenwick_tree/description.typ"
+
+#pagebreak(weak: true)
+
 = Графы
 
 #include "algorithms/scc/description.typ"
