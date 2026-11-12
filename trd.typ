@@ -38,14 +38,10 @@
 #include "algorithms/reachable_sums/description.typ"
 #include "algorithms/grouped_knapsack/description.typ"
 
-#include "algorithms/interval_dp/description.typ"
 #include "algorithms/bitmask_dp/description.typ"
 #include "algorithms/tree_dp/description.typ"
 
 #pagebreak(weak: true)
 
+#include "algorithms/interval_dp/description.typ"
 #include "algorithms/knuth_dp/description.typ"
-
-#pagebreak(weak: true)
-
-#include "algorithms/divide_conquer_dp/description.typ"

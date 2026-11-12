@@ -1,5 +1,0 @@
-add_executable(divide_conquer_dp_test test.cpp)
-add_test(NAME divide_conquer_dp COMMAND divide_conquer_dp_test)
-set_tests_properties(divide_conquer_dp PROPERTIES TIMEOUT 60)
-
-add_executable(divide_conquer_dp_example example.cpp)
