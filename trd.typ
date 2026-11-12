@@ -15,3 +15,7 @@
 = Структуры данных
 
 #include "algorithms/fixed_set/description.typ"
+
+= Графы
+
+#include "algorithms/graphs/description.typ"
