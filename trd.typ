@@ -29,3 +29,9 @@
 #pagebreak(weak: true)
 
 #include "algorithms/two_sat/description.typ"
+
+#pagebreak(weak: true)
+
+= Динамическое программирование
+
+#include "algorithms/bitmask_dp/description.typ"
