@@ -29,3 +29,9 @@
 #pagebreak(weak: true)
 
 #include "algorithms/two_sat/description.typ"
+
+#pagebreak(weak: true)
+
+= Теория чисел
+
+#include "algorithms/number_theory/description.typ"
