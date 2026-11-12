@@ -18,6 +18,10 @@
 
 #pagebreak(weak: true)
 
+#include "algorithms/segment_tree/description.typ"
+
+#pagebreak(weak: true)
+
 = Графы
 
 #include "algorithms/scc/description.typ"
