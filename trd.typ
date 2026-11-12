@@ -34,6 +34,22 @@
 
 = Динамическое программирование
 
+#[
+  #show raw.where(block: true): set par(leading: 0.25em)
+  #include "algorithms/knapsack_01/description.typ"
+  #include "algorithms/reachable_sums/description.typ"
+]
+
+#pagebreak(weak: true)
+
+#include "algorithms/grouped_knapsack/description.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/interval_dp/description.typ"
+
+#pagebreak(weak: true)
+
 #include "algorithms/bitmask_dp/description.typ"
 
 #block(breakable: false)[
