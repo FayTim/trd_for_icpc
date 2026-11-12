@@ -35,3 +35,7 @@
 = Динамическое программирование
 
 #include "algorithms/bitmask_dp/description.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/tree_dp/description.typ"
