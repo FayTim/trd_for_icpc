@@ -36,6 +36,6 @@
 
 #include "algorithms/bitmask_dp/description.typ"
 
-#pagebreak(weak: true)
-
-#include "algorithms/tree_dp/description.typ"
+#block(breakable: false)[
+  #include "algorithms/tree_dp/description.typ"
+]
