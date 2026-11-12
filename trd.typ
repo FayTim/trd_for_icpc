@@ -15,3 +15,13 @@
 = Структуры данных
 
 #include "algorithms/fixed_set/description.typ"
+
+#pagebreak(weak: true)
+
+= Графы
+
+#include "algorithms/scc/description.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/two_sat/description.typ"
