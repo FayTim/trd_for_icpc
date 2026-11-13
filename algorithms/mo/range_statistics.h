@@ -3,7 +3,6 @@
 #include "mo.h"
 
 #include <algorithm>
-#include <bit>
 #include <cmath>
 #include <vector>
 
@@ -54,13 +53,14 @@ struct FrequencyState {
 };
 
 inline auto RangeFrequencies(const std::vector<int>& a,
-                             const std::vector<Query>& queries,
-                             Order order = Order::Snake) {
+                             const std::vector<Query>& queries) {
   CompressedArray compressed(a);
   FrequencyState state(compressed.ranks, compressed.values.size());
-  return Solve(a.size(), queries, state, order);
+  return Solve(a.size(), queries, state);
 }
 
+// Value buckets as in Algorithmica: O(1) update, O(sqrt(sigma)) kth.
+// https://ru.algorithmica.org/cs/decomposition/mo/
 // Nonnegative frequencies. Kth(k) returns a rank, k is ONE-based.
 // Precondition for Kth: 1 <= k <= the total frequency.
 struct SqrtFrequencies {
@@ -82,38 +82,12 @@ struct SqrtFrequencies {
   }
 };
 
-struct FenwickFrequencies {
-  std::vector<int> tree;
-  explicit FenwickFrequencies(int sigma) : tree(sigma) {}
-  void Add(int rank, int delta) {
-    for (int n = tree.size(); rank < n; rank |= rank + 1)
-      tree[rank] += delta;
-  }
-  int Prefix(int r) const {  // Number of values with rank < r.
-    int sum = 0;
-    for (; r; r &= r - 1) sum += tree[r - 1];
-    return sum;
-  }
-  int Kth(int k) const {
-    int pos = 0, n = tree.size();
-    for (unsigned step = std::bit_floor(unsigned(n)); step; step >>= 1) {
-      int next = pos + int(step);
-      if (next <= n && tree[next - 1] < k) {
-        k -= tree[next - 1];
-        pos = next;
-      }
-    }
-    return pos;
-  }
-};
-
 struct KthQuery { int l, r, k; };  // [l,r), 1 <= k <= r-l.
 
-template <class Frequencies>
 struct KthState {
   const CompressedArray& a;
   const std::vector<KthQuery>& queries;
-  Frequencies frequencies;
+  SqrtFrequencies frequencies;
   KthState(const CompressedArray& array, const std::vector<KthQuery>& q)
       : a(array), queries(q), frequencies(array.values.size()) {}
   void AddLeft(int i) { frequencies.Add(a.ranks[i], 1); }
@@ -125,65 +99,13 @@ struct KthState {
   }
 };
 
-template <class Frequencies>
 inline auto RangeKth(const std::vector<int>& a,
-                     const std::vector<KthQuery>& queries,
-                     Order order = Order::Snake) {
+                     const std::vector<KthQuery>& queries) {
   CompressedArray compressed(a);
-  KthState<Frequencies> state(compressed, queries);
+  KthState state(compressed, queries);
   std::vector<Query> intervals;
   for (auto q : queries) intervals.push_back({q.l, q.r});
-  return Solve(a.size(), intervals, state, order);
-}
-
-inline auto RangeKthSqrt(const std::vector<int>& a,
-                         const std::vector<KthQuery>& queries,
-                         Order order = Order::Snake) {
-  return RangeKth<SqrtFrequencies>(a, queries, order);
-}
-
-inline auto RangeKthFenwick(const std::vector<int>& a,
-                            const std::vector<KthQuery>& queries,
-                            Order order = Order::Snake) {
-  return RangeKth<FenwickFrequencies>(a, queries, order);
-}
-
-struct InversionState {
-  const std::vector<int>& a;
-  FenwickFrequencies frequencies;
-  int size = 0;
-  long long inversions = 0;
-  InversionState(const std::vector<int>& ranks, int sigma)
-      : a(ranks), frequencies(sigma) {}
-  void AddLeft(int i) {
-    inversions += frequencies.Prefix(a[i]);
-    frequencies.Add(a[i], 1);
-    ++size;
-  }
-  void AddRight(int i) {
-    inversions += size - frequencies.Prefix(a[i] + 1);
-    frequencies.Add(a[i], 1);
-    ++size;
-  }
-  void RemoveLeft(int i) {
-    frequencies.Add(a[i], -1);
-    --size;
-    inversions -= frequencies.Prefix(a[i]);
-  }
-  void RemoveRight(int i) {
-    frequencies.Add(a[i], -1);
-    --size;
-    inversions -= size - frequencies.Prefix(a[i] + 1);
-  }
-  long long Answer(int) const { return inversions; }
-};
-
-inline auto RangeInversions(const std::vector<int>& a,
-                            const std::vector<Query>& queries,
-                            Order order = Order::Snake) {
-  CompressedArray compressed(a);
-  InversionState state(compressed.ranks, compressed.values.size());
-  return Solve(a.size(), queries, state, order);
+  return Solve(a.size(), intervals, state);
 }
 
 }  // namespace mo

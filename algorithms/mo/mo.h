@@ -1,9 +1,7 @@
 #pragma once
 
 #include <algorithm>
-#include <bit>
 #include <cmath>
-#include <cstdint>
 #include <numeric>
 #include <vector>
 
@@ -12,24 +10,8 @@
 namespace mo {
 
 struct Query { int l, r; };  // [l, r), 0 <= l <= r <= n
-enum class Order { Snake, Hilbert };
 
 namespace detail {
-
-// 0 <= bits <= 31; x,y < 2^bits. The key uses at most 62 bits.
-inline std::uint64_t HilbertKey(std::uint32_t x, std::uint32_t y,
-                                int bits, int rotation = 0) {
-  if (bits == 0) return 0;
-  const std::uint32_t half = std::uint32_t{1} << (bits - 1);
-  int quadrant = x < half ? (y < half ? 0 : 3) : (y < half ? 1 : 2);
-  quadrant = (quadrant + rotation) & 3;
-  constexpr int turn[] = {3, 0, 0, 1};
-  const auto inner = HilbertKey(x & (half - 1), y & (half - 1),
-                               bits - 1, (rotation + turn[quadrant]) & 3);
-  const std::uint64_t area = std::uint64_t{1} << (2 * bits - 2);
-  return quadrant * area + ((quadrant == 1 || quadrant == 2)
-                               ? inner : area - inner - 1);
-}
 
 template <class State>
 void Move(int& l, int& r, int next_l, int next_r, State& state) {
@@ -48,29 +30,19 @@ void Move(int& l, int& r, int next_l, int next_r, State& state) {
 // B=0 selects max(1, floor(n/sqrt(q))); an explicit B must be positive.
 template <class State>
 auto Solve(int n, const std::vector<Query>& queries, State& state,
-           Order order = Order::Snake, int block_size = 0) {
+           int block_size = 0) {
   std::vector<decltype(state.Answer(0))> answers(queries.size());
   if (queries.empty()) return answers;
   std::vector<int> ids(queries.size());
   std::iota(ids.begin(), ids.end(), 0);
-  if (order == Order::Hilbert) {
-    const int bits = std::bit_width(static_cast<std::uint32_t>(n));
-    std::vector<std::uint64_t> keys(queries.size());
-    for (int i : ids)
-      keys[i] = detail::HilbertKey(queries[i].l, queries[i].r, bits);
-    std::sort(ids.begin(), ids.end(), [&](int i, int j) {
-      return keys[i] < keys[j];
-    });
-  } else {
-    const int b = block_size > 0 ? block_size
-        : std::max(1, static_cast<int>(n / std::sqrt(queries.size())));
-    std::sort(ids.begin(), ids.end(), [&](int i, int j) {
-      const int bi = queries[i].l / b, bj = queries[j].l / b;
-      if (bi != bj) return bi < bj;
-      return bi & 1 ? queries[i].r > queries[j].r
-                    : queries[i].r < queries[j].r;
-    });
-  }
+  const int b = block_size > 0 ? block_size
+      : std::max(1, static_cast<int>(n / std::sqrt(queries.size())));
+  std::sort(ids.begin(), ids.end(), [&](int i, int j) {
+    const int bi = queries[i].l / b, bj = queries[j].l / b;
+    if (bi != bj) return bi < bj;
+    return bi & 1 ? queries[i].r > queries[j].r
+                  : queries[i].r < queries[j].r;
+  });
   int l = 0, r = 0;
   for (int id : ids) {
     detail::Move(l, r, queries[id].l, queries[id].r, state);

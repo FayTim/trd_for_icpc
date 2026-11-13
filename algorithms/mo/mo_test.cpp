@@ -1,7 +1,6 @@
 #include "mo.h"
 
 #include <array>
-#include <climits>
 #include <deque>
 #include <iostream>
 #include <random>
@@ -69,42 +68,6 @@ Answer Brute(const std::vector<long long>& a, int l, int r, int id) {
           std::accumulate(a.begin() + l, a.begin() + r, 0LL)};
 }
 
-void TestHilbert() {
-  Require(mo::detail::HilbertKey(0, 0, 1) == 0 &&
-          mo::detail::HilbertKey(1, 0, 1) == 1 &&
-          mo::detail::HilbertKey(1, 1, 1) == 2 &&
-          mo::detail::HilbertKey(0, 1, 1) == 3, "Hilbert orientation");
-  for (int bits = 0; bits <= 6; ++bits) {
-    const int side = 1 << bits;
-    std::vector<std::pair<int, int>> points(side * side, {-1, -1});
-    for (int x = 0; x < side; ++x) {
-      for (int y = 0; y < side; ++y) {
-        auto key = mo::detail::HilbertKey(x, y, bits);
-        Require(key < points.size(), "Hilbert key out of bounds");
-        Require(points[key].first == -1, "Hilbert key collision");
-        points[key] = {x, y};
-      }
-    }
-    for (int i = 1; i < side * side; ++i) {
-      const auto [x, y] = points[i - 1];
-      const auto [nx, ny] = points[i];
-      Require(std::abs(x - nx) + std::abs(y - ny) == 1,
-              "Hilbert traversal must join adjacent grid cells");
-    }
-  }
-  std::vector<std::uint64_t> corners;
-  for (std::uint32_t x : {0U, static_cast<unsigned>(INT_MAX)}) {
-    for (std::uint32_t y : {0U, static_cast<unsigned>(INT_MAX)}) {
-      auto key = mo::detail::HilbertKey(x, y, 31);
-      Require(key < (std::uint64_t{1} << 62), "Hilbert 62-bit bound");
-      corners.push_back(key);
-    }
-  }
-  std::sort(corners.begin(), corners.end());
-  Require(std::adjacent_find(corners.begin(), corners.end()) == corners.end(),
-          "Large Hilbert corners must differ");
-}
-
 void TestStatic(std::mt19937& rng) {
   std::array<int, 4> calls{};
   for (int iteration = 0; iteration < 300; ++iteration) {
@@ -118,14 +81,12 @@ void TestStatic(std::mt19937& rng) {
     std::vector<Answer> expected;
     for (int id = 0; id < static_cast<int>(queries.size()); ++id)
       expected.push_back(Brute(a, queries[id].l, queries[id].r, id));
-    for (auto order : {mo::Order::Snake, mo::Order::Hilbert}) {
-      for (int block : {0, 1, 3, n + 1}) {
-        Window state;
-        state.a = a;
-        Require(mo::Solve(n, queries, state, order, block) == expected,
-                "Static Mo differs from direct slice");
-        for (int i = 0; i < 4; ++i) calls[i] += state.calls[i];
-      }
+    for (int block : {0, 1, 3, n + 1}) {
+      Window state;
+      state.a = a;
+      Require(mo::Solve(n, queries, state, block) == expected,
+              "Static Mo differs from direct slice");
+      for (int i = 0; i < 4; ++i) calls[i] += state.calls[i];
     }
   }
   for (int count : calls) Require(count > 0, "Missing boundary direction");
@@ -212,7 +173,6 @@ void TestUpdates(std::mt19937& rng) {
 int main() {
   try {
     std::mt19937 rng(0xA10C2025);
-    TestHilbert();
     TestStatic(rng);
     TestUpdates(rng);
   } catch (const std::exception& error) {

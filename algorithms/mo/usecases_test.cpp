@@ -57,16 +57,11 @@ void CheckStatistics(const std::vector<int>& a, std::mt19937& rng) {
   if (!queries.empty()) queries.push_back(queries.front());
   std::shuffle(queries.begin(), queries.end(), rng);
   std::vector<mo::FrequencySummary> expected_stats;
-  std::vector<long long> expected_inversions;
   std::vector<mo::KthQuery> kth_queries;
   std::vector<int> expected_kth;
   for (auto q : queries) {
     std::map<int, int> count;
-    long long inv = 0;
-    for (int i = q.l; i < q.r; ++i) {
-      ++count[a[i]];
-      for (int j = i + 1; j < q.r; ++j) inv += a[i] > a[j];
-    }
+    for (int i = q.l; i < q.r; ++i) ++count[a[i]];
     mo::FrequencySummary summary;
     summary.distinct = count.size();
     for (auto [value, c] : count) {
@@ -75,7 +70,6 @@ void CheckStatistics(const std::vector<int>& a, std::mt19937& rng) {
       summary.squared_frequencies += 1LL * c * c;
     }
     expected_stats.push_back(summary);
-    expected_inversions.push_back(inv);
     std::vector<int> sorted(a.begin() + q.l, a.begin() + q.r);
     std::sort(sorted.begin(), sorted.end());
     for (int k = 1; k <= q.r - q.l; ++k) {
@@ -83,16 +77,10 @@ void CheckStatistics(const std::vector<int>& a, std::mt19937& rng) {
       expected_kth.push_back(sorted[k - 1]);
     }
   }
-  for (auto order : {mo::Order::Snake, mo::Order::Hilbert}) {
-    Require(mo::RangeFrequencies(a, queries, order) == expected_stats,
-            "Frequency statistics differ from brute force");
-    Require(mo::RangeInversions(a, queries, order) == expected_inversions,
-            "Inversions differ from brute force");
-    Require(mo::RangeKthSqrt(a, kth_queries, order) == expected_kth,
-            "Sqrt kth statistic differs from sorting");
-    Require(mo::RangeKthFenwick(a, kth_queries, order) == expected_kth,
-            "Fenwick kth statistic differs from sorting");
-  }
+  Require(mo::RangeFrequencies(a, queries) == expected_stats,
+          "Frequency statistics differ from brute force");
+  Require(mo::RangeKth(a, kth_queries) == expected_kth,
+          "Bucket kth statistic differs from sorting");
   CheckLis(a);
 }
 
@@ -105,9 +93,6 @@ void CheckLargeCounts() {
           "Frequency arithmetic must be 64-bit");
   std::vector<int> decreasing(n);
   std::iota(decreasing.rbegin(), decreasing.rend(), 0);
-  auto inv = mo::RangeInversions(decreasing, queries);
-  Require(inv == std::vector<long long>{1LL * n * (n - 1) / 2, 0, 0, 0},
-          "Inversion arithmetic must be 64-bit");
   Require(mo::ApproximateRangeLis(decreasing, queries) ==
               std::vector<int>{1, 0, 0, 1},
           "Decreasing intervals have LIS one");
@@ -142,7 +127,7 @@ int main() {
   }
   Require(mo::ApproximateRangeLis({1, 2}, {}).empty(), "No LIS queries");
   Require(mo::RangeFrequencies({1, 2}, {}).empty(), "No frequency queries");
-  Require(mo::RangeInversions({1, 2}, {}).empty(), "No inversion queries");
+  Require(mo::RangeKth({1, 2}, {}).empty(), "No kth queries");
   CheckLargeCounts();
   std::cout << "Mo use-cases: differential and exhaustive tests passed\n";
 }
