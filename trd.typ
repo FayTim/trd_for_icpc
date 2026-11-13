@@ -34,6 +34,24 @@
 
 #include "algorithms/two_sat/description.typ"
 
+#pagebreak(weak: true)
+
+= Динамическое программирование
+
+#include "algorithms/knapsack_01/description.typ"
+#include "algorithms/reachable_sums/description.typ"
+#include "algorithms/grouped_knapsack/description.typ"
+
+#include "algorithms/bitmask_dp/description.typ"
+#include "algorithms/tree_dp/description.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/interval_dp/description.typ"
+#include "algorithms/knuth_dp/description.typ"
+
+#pagebreak(weak: true)
+
 = Алгоритмы на строки
 
 #include "algorithms/z_function/description.typ"
