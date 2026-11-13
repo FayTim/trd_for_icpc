@@ -64,7 +64,8 @@
 *Карта блоков.* Номер на правом поле занимает постоянную высоту;
 короткий код повторяется сверху и внизу каждой страницы.
 Внизу слева, например `ГР-3/19`, — третья из 19 страниц блока;
-справа — сквозная страница для оглавления.
+справа — сквозная страница. В оглавлении адрес `3 ГР-3` означает блок
+`3 ГР`, страницу 3 внутри него; после «стр.» указан сквозной номер.
 
 #context table(columns: (auto, 1fr), inset: 3pt, stroke: 0.4pt,
   [*Метка*], [*Содержимое*],
@@ -81,6 +82,19 @@
 Показанные примеры содержат отдельные `main`: выбирайте один и подставляйте
 ввод своей задачи. Раздел «модификации» описывает изменения базового
 алгоритма; применяйте их только при явно указанных предпосылках.
+
+// Keep a chapter-local address and the global page number in each entry.
+#show outline.entry: it => context {
+  let target = it.element.location()
+  let chapter = query(heading.where(level: 1, outlined: true))
+    .filter(h => h.location().page() <= target.page()).last()
+  let i = chapter-number(chapter)
+  let local = target.page() - chapter.location().page() + 1
+  let address = box(text(size: 8pt)[#i #marks.at(i - 1)-#local · стр. #target.page()])
+  link(target, it.indented(it.prefix(), [
+    #it.body()#h(0.5em)#box(width: 1fr, it.fill)#h(0.5em)#address
+  ]))
+}
 
 #outline(title: [Содержание], depth: 2)
 
