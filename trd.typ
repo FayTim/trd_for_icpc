@@ -45,3 +45,10 @@
 
 #include "algorithms/interval_dp/description.typ"
 #include "algorithms/knuth_dp/description.typ"
+
+#pagebreak(weak: true)
+
+= Алгоритмы на строки
+
+#include "algorithms/z_function/description.typ"
+#include "algorithms/polynomial_hashes/description.typ"
