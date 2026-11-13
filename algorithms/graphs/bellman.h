@@ -10,7 +10,8 @@ using ll = long long;
 using graph_constants::INF;
 
 // e[i] = {a, b, w} (ориентированное ребро a -> b), w любой знак
-// true: из s достижим отрицательный цикл (d неверны); иначе d[v] = расстояние (INF если недостижима)
+// true: из s достижим отрицательный цикл. d[v]: INF — нет пути,
+// -INF — достижим из отрицательного цикла; иначе конечное расстояние.
 inline bool bellman(int n, int s, vector<array<ll, 3>>& e, vector<ll>& d) {
     vector<__int128> dist(n, INF);
     dist[s] = 0;
