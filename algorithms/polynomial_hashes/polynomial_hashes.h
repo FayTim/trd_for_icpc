@@ -56,4 +56,21 @@ namespace polynomial_hash {
         return sub(prefix[r], mul(prefix[l], power[r - l]));
     }
 
+    // Все позиции с хешем pattern. Возможны коллизии; длины должны быть < INT_MAX.
+    // Пустой шаблон совпадает во всех |text| + 1 границах строки.
+    inline vector<int> find_all(const string& text, const string& pattern) {
+        const int n = static_cast<int>(text.size());
+        const int m = static_cast<int>(pattern.size());
+        if (m > n) return {};
+        const auto power = build_powers(n);
+        const auto prefix = build_prefix(text);
+        const auto pattern_prefix = build_prefix(pattern);
+        const auto wanted = get(pattern_prefix, power, 0, m);
+        vector<int> positions;
+        for (int i = 0; i <= n - m; ++i) {
+            if (get(prefix, power, i, i + m) == wanted) positions.push_back(i);
+        }
+        return positions;
+    }
+
 }

@@ -60,25 +60,22 @@ void TestSubstringsMatchDirectHash() {
 }
 
 void TestSearchAgainstFind() {
+  Expect(ph::find_all("a", "ab").empty(), "pattern longer than text");
+  Expect(ph::find_all("", "a").empty(), "nonempty pattern in empty text");
+  Expect(ph::find_all("", "") == std::vector<int>{0}, "both strings empty");
+  Expect(ph::find_all("ab", "") == std::vector<int>({0, 1, 2}),
+         "empty pattern matches every boundary");
+  Expect(ph::find_all("aaaa", "aa") == std::vector<int>({0, 1, 2}),
+         "overlapping matches");
+  Expect(ph::find_all(std::string("a\0a\0", 4), std::string("a\0", 2)) ==
+             std::vector<int>({0, 2}), "binary strings");
   std::mt19937 generator(0xC0FFEE);
   for (int trial = 0; trial < 2000; ++trial) {
     const std::string text =
         RandomString(generator, static_cast<int>(generator() % 60) + 1, 2);
     const std::string pattern =
         RandomString(generator, static_cast<int>(generator() % 4) + 1, 2);
-    const int n = static_cast<int>(text.size());
-    const int m = static_cast<int>(pattern.size());
-
-    const auto power = ph::build_powers(n);
-    const auto text_prefix = ph::build_prefix(text);
-    const std::uint64_t pattern_hash = Whole(pattern);
-
-    std::vector<int> found;
-    for (int i = 0; i + m <= n; ++i) {
-      if (ph::get(text_prefix, power, i, i + m) == pattern_hash) {
-        found.push_back(i);
-      }
-    }
+    const auto found = ph::find_all(text, pattern);
     std::vector<int> expected;
     for (std::size_t pos = text.find(pattern); pos != std::string::npos;
          pos = text.find(pattern, pos + 1)) {
