@@ -10,6 +10,7 @@
 ```text
 trd.typ                        # главный документ и подключения разделов
 algorithms/
+  mo/                         # Мо: змейка, откаты, изменения, k-й на блоках
   fixed_set/
     description.typ            # описание, интерфейс и включение листингов
     fixed_set.h                # самостоятельная реализация
@@ -40,6 +41,11 @@ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build --parallel
 ctest --test-dir build --output-on-failure
 ```
+
+Раздел [алгоритма Мо](algorithms/mo/README.md) включает змейку, откаты,
+изменения массива, частоты и k-ю статистику на блоках по значениям.
+Есть краткое сведение путей дерева и приближённый LIS на отрезках.
+Реализации проверяются сравнением с перебором, примеры компилируются.
 
 Вместе с тестами компилируются примеры `fixed_set_example`,
 `compress_coordinates_example`, `scc_example`

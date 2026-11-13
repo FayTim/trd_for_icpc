@@ -65,6 +65,10 @@
 
 = Алгоритмические приёмы
 
+#include "algorithms/mo/description.typ"
+
+#pagebreak(weak: true)
+
 #include "algorithms/compress_coordinates/description.typ"
 
 #pagebreak(weak: true)
