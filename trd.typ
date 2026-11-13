@@ -68,3 +68,21 @@
 = Теория чисел
 
 #include "algorithms/number_theory/description.typ"
+
+#pagebreak(weak: true)
+
+= Геометрия
+
+#include "algorithms/geometry/description.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/geometry/segments.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/geometry/rectangles.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/geometry/polygons.typ"
