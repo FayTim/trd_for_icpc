@@ -49,10 +49,10 @@ $O((g + m + 1)(C + 1))$, дополнительная память $O(C + 1)$.
 
 Подключите `grouped_knapsack.h` или скопируйте его целиком перед `main`.
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("example.cpp"), lang: "cpp", block: true)
 ]
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("grouped_knapsack.h"), lang: "cpp", block: true)
 ]

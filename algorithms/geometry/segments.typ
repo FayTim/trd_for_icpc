@@ -48,8 +48,6 @@
 
 #raw(read("segments_example.cpp"), lang: "cpp", block: true)
 
-#pagebreak()
-
 === Реализация
 
 #raw(read("segments.h"), lang: "cpp", block: true)

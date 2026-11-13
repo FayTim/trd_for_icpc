@@ -60,7 +60,6 @@ $
   $ sum_(d divides n) phi(d)=n, quad
     sum_(x=1)^n gcd(x,n)=sum_(d divides n) d phi(n/d). $
 
-#pagebreak(weak: true)
 === Функция Мёбиуса: определение и применения
 
 *Определение.* $mu(1)=1$. Если $n$ делится на квадрат хотя бы одного
@@ -92,7 +91,6 @@ $ sum_(d divides n) mu(d) = [n=1]. $
   $ sum_(d=1)^(floor(sqrt(N))) mu(d) floor(N/d^2). $
   Здесь нужны значения $mu$ до $floor(sqrt(N))$; единица учитывается.
 
-#pagebreak(weak: true)
 #include "sieve.typ"
 #include "factorization.typ"
 #include "divisibility.typ"

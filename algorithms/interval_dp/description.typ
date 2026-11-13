@@ -51,11 +51,11 @@ $
 
 Подключите `merge_piles.h` или скопируйте его целиком перед `main`.
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("example.cpp"), lang: "cpp", block: true)
 ]
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("merge_piles.h"), lang: "cpp", block: true)
 ]
 

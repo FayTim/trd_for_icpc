@@ -47,10 +47,10 @@ $O(ceil(("MaxSum" + 1) / b))$ машинных слов. Обычно $b = 64$.
 
 Подключите `reachable_sums.h` или скопируйте его целиком перед `main`.
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("example.cpp"), lang: "cpp", block: true)
 ]
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("reachable_sums.h"), lang: "cpp", block: true)
 ]

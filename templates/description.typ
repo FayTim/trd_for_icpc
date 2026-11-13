@@ -24,8 +24,6 @@ c++ -std=c++20 -O2 ordinary.cpp -o solution
 
 #raw(read("ordinary.cpp"), lang: "cpp", block: true)
 
-#pagebreak(weak: true)
-
 == Интерактивный шаблон с локальным судьёй
 
 Стратегия `FindSecret(n, ask)` получает функцию запроса. В обычном режиме

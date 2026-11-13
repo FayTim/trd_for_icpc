@@ -65,10 +65,10 @@ $upright("opt")[l][r-1] <= upright("opt")[l][r] <= upright("opt")[l+1][r]$.
 
 Подключите `knuth_dp.h` или скопируйте его целиком перед `main`.
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("example.cpp"), lang: "cpp", block: true)
 ]
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("knuth_dp.h"), lang: "cpp", block: true)
 ]

@@ -60,8 +60,6 @@ $10^6$. Заголовок `polygons.h` подключает `segments.h` и `po
 
 #raw(read("polygons_example.cpp"), lang: "cpp", block: true)
 
-#pagebreak()
-
 === Реализация
 
 #raw(read("polygons.h"), lang: "cpp", block: true)

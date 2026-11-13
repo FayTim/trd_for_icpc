@@ -16,7 +16,7 @@
 У листа `take[v] = weight[v]`, `skip[v] = 0`. Для внутренней вершины
 перебираем её детей `u`:
 
-#block(breakable: false)[
+#block(breakable: true)[
 ```text
 take[v] = weight[v]
 skip[v] = 0
@@ -62,10 +62,10 @@ skip[v] = 0
 
 Подключите `tree_independent_set.h` или скопируйте его целиком перед `main`.
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("example.cpp"), lang: "cpp", block: true)
 ]
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("tree_independent_set.h"), lang: "cpp", block: true)
 ]

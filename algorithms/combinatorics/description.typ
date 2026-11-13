@@ -63,5 +63,4 @@ for (int i = 1; i <= n; ++i)
 
 #raw(read("example.cpp"), lang: "cpp", block: true)
 
-#pagebreak(weak: true)
 #raw(read("binomial.h"), lang: "cpp", block: true)

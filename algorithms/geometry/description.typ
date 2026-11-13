@@ -43,8 +43,6 @@
 
 #raw(read("point_example.cpp"), lang: "cpp", block: true)
 
-#pagebreak()
-
 === Реализация
 
 #raw(read("point.h"), lang: "cpp", block: true)

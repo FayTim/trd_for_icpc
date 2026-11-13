@@ -39,8 +39,6 @@
 
 #raw(read("rectangles_example.cpp"), lang: "cpp", block: true)
 
-#pagebreak()
-
 === Реализация
 
 #raw(read("rectangles.h"), lang: "cpp", block: true)

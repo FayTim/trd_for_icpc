@@ -43,11 +43,11 @@
 
 Подключите `knapsack_01.h` или скопируйте его целиком перед `main`.
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("example.cpp"), lang: "cpp", block: true)
 ]
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("knapsack_01.h"), lang: "cpp", block: true)
 ]
 
@@ -58,7 +58,7 @@
 Полный порядок вычисления следующий (`нет` означает недостижимое состояние,
 в C++ его удобно хранить как `std::optional<long long>`):
 
-#block(breakable: false)[
+#block(breakable: true)[
 ```text
 dp[0..C] = нет
 dp[0] = 0

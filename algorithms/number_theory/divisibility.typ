@@ -32,7 +32,7 @@ $v_(p)(binom(n, k)) = v_(p)(n!) - v_(p)(k!) - v_(p)((n-k)!)$.
 Для взвешенных сумм нужны префиксы весов; их вычисление не входит
 в стоимость обхода блоков. Переполнение результата контролирует вызывающий код.
 
-#block(breakable: false)[
+#block(breakable: true)[
   #raw(read("divisibility_example.cpp"), lang: "cpp", block: true)
 ]
 #raw(read("divisibility.h"), lang: "cpp", block: true)

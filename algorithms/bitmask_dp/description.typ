@@ -59,10 +59,10 @@
 Требуется C++20 для `std::popcount`. Подключите `assignment.h` или
 скопируйте его целиком перед `main`.
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("example.cpp"), lang: "cpp", block: true)
 ]
 
-#block(breakable: false)[
+#block(breakable: true)[
 #raw(read("assignment.h"), lang: "cpp", block: true)
 ]
