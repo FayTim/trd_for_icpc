@@ -24,6 +24,10 @@
 
 = Графы
 
+#include "algorithms/graphs/description.typ"
+
+#pagebreak(weak: true)
+
 #include "algorithms/scc/description.typ"
 
 #pagebreak(weak: true)
