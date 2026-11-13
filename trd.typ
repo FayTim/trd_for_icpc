@@ -34,3 +34,9 @@
 
 #include "algorithms/z_function/description.typ"
 #include "algorithms/polynomial_hashes/description.typ"
+
+#pagebreak(weak: true)
+
+= Алгоритмические приёмы
+
+#include "algorithms/compress_coordinates/description.typ"
