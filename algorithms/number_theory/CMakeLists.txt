@@ -1,4 +1,4 @@
-foreach(part sieve factorization divisibility modular)
+foreach(part sieve factorization divisibility modular integer_roots)
   add_executable(number_theory_${part}_test ${part}_test.cpp)
   if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(number_theory_${part}_test PRIVATE -Wall -Wextra -Wpedantic)

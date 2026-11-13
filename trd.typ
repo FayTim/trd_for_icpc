@@ -12,6 +12,12 @@
 
 #outline(title: [Содержание], depth: 2)
 
+= Шаблоны решения
+
+#include "templates/description.typ"
+
+#pagebreak(weak: true)
+
 = Структуры данных
 
 #include "algorithms/fixed_set/description.typ"
@@ -69,6 +75,14 @@
 
 = Алгоритмические приёмы
 
+#include "algorithms/binary_search/description.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/gray_code/description.typ"
+
+#pagebreak(weak: true)
+
 #include "algorithms/compress_coordinates/description.typ"
 
 #pagebreak(weak: true)
@@ -76,6 +90,12 @@
 = Теория чисел
 
 #include "algorithms/number_theory/description.typ"
+
+#pagebreak(weak: true)
+
+= Комбинаторика
+
+#include "algorithms/combinatorics/description.typ"
 
 #pagebreak(weak: true)
 

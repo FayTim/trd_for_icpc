@@ -9,7 +9,11 @@
 
 ```text
 trd.typ                        # главный документ и подключения разделов
+templates/                     # обычное и интерактивное решение, режим --test
 algorithms/
+  binary_search/               # граница монотонного предиката, поиск по ответу
+  gray_code/                   # двоичный код Грея и изменившийся бит
+  combinatorics/               # точные и модульные биномиальные коэффициенты
   fixed_set/
     description.typ            # описание, интерфейс и включение листингов
     fixed_set.h                # самостоятельная реализация
@@ -32,8 +36,8 @@ CMakeLists.txt                 # подключение модулей с тес
 
 ## Тесты
 
-Нужны CMake 3.20 или новее и компилятор с поддержкой C++20, например GCC 12+
-или Clang 15+.
+Нужны CMake 3.20 или новее, Python 3 для локального интерактора и компилятор
+с поддержкой C++20, например GCC 12+ или Clang 15+.
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -41,12 +45,34 @@ cmake --build build --parallel
 ctest --test-dir build --output-on-failure
 ```
 
+## Шаблоны решения
+
+[`templates/ordinary.cpp`](templates/ordinary.cpp) отделяет `Solve(in, out)`
+от запуска и встроенных тестов. [`templates/interactive.cpp`](templates/interactive.cpp)
+отделяет стратегию от обмена с судьёй; в `--test` вместо реального судьи
+используется локальная модель. Каждый файл можно скопировать как самостоятельное
+решение на C++20 и заменить демонстрационную задачу на свою.
+
+```sh
+./build/templates/contest_template --test
+./build/templates/interactive_template --test
+./build/templates/contest_template < input.txt
+```
+
+Без аргументов шаблоны работают в режиме отправки на проверку. Тесты
+запускаются только с `--test`, а диагностика идёт в `stderr`.
+Интерактивный демопротокол нужно заменить на протокол конкретной задачи.
+CTest также запускает отдельного судью через каналы процесса: он проверяет
+своевременный `flush`, лимит запросов и завершение при ошибке или конце ввода.
+
+## Проверяемые разделы
+
 Вместе с тестами компилируются примеры `fixed_set_example`,
 `compress_coordinates_example`, `scc_example`
 и `two_sat_example`. Модули [SCC](algorithms/scc/README.md) и
 [2-SAT](algorithms/two_sat/README.md) содержат описание интерфейса и применения.
-Раздел [теории чисел](algorithms/number_theory/README.md) включает четыре
-самостоятельных заголовка, четыре теста и компилируемые примеры.
+Раздел [теории чисел](algorithms/number_theory/README.md) включает пять
+самостоятельных заголовков, пять тестов и компилируемые примеры.
 Для его 64-битной арифметики нужен GCC/Clang с `__uint128_t` и `__int128_t`.
 
 Раздел графов включает [эйлеров путь и цикл](algorithms/graphs/euler.h)
