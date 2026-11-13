@@ -62,3 +62,9 @@
 = Алгоритмические приёмы
 
 #include "algorithms/compress_coordinates/description.typ"
+
+#pagebreak(weak: true)
+
+= Теория чисел
+
+#include "algorithms/number_theory/description.typ"
