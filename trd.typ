@@ -18,6 +18,25 @@
 
 #pagebreak(weak: true)
 
+#include "algorithms/segment_tree/description.typ"
+
+#pagebreak(weak: true)
+
+= Графы
+
+#include "algorithms/scc/description.typ"
+
+#pagebreak(weak: true)
+
+#include "algorithms/two_sat/description.typ"
+
+= Алгоритмы на строки
+
+#include "algorithms/z_function/description.typ"
+#include "algorithms/polynomial_hashes/description.typ"
+
+#pagebreak(weak: true)
+
 = Алгоритмические приёмы
 
 #include "algorithms/compress_coordinates/description.typ"

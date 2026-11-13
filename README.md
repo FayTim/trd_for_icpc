@@ -22,6 +22,8 @@ algorithms/
     example.cpp                # компилируемый пример использования
     test.cpp                   # тесты прямого и обратного отображения
     CMakeLists.txt              # цели сборки и регистрация теста в CTest
+  scc/                         # компоненты сильной связности (Косарайю)
+  two_sat/                     # 2-SAT на основе SCC
 CMakeLists.txt                 # подключение модулей с тестами
 .github/workflows/ci.yml        # тесты и PDF для PR и main
 ```
@@ -37,8 +39,10 @@ cmake --build build --parallel
 ctest --test-dir build --output-on-failure
 ```
 
-Вместе с тестами компилируются примеры `fixed_set_example` и
-`compress_coordinates_example`.
+Вместе с тестами компилируются примеры `fixed_set_example`,
+`compress_coordinates_example`, `scc_example`
+и `two_sat_example`. Модули [SCC](algorithms/scc/README.md) и
+[2-SAT](algorithms/two_sat/README.md) содержат описание интерфейса и применения.
 
 ## Сборка документа
 
