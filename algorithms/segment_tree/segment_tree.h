@@ -55,3 +55,26 @@ inline int FirstBelow(int x) {
   }
   return v - base;
 }
+
+namespace segment_tree_detail {
+inline int FirstBelow(int v, int lo, int hi, int l, int r, int x) {
+  if (r <= lo || hi <= l || tree[v] >= x) {
+    return n;
+  }
+  if (hi - lo == 1) {
+    return lo;
+  }
+  const int mid = lo + (hi - lo) / 2;
+  const int left = FirstBelow(2 * v, lo, mid, l, r, x);
+  return left != n ? left : FirstBelow(2 * v + 1, mid, hi, l, r, x);
+}
+}  // namespace segment_tree_detail
+
+// Первый индекс i в [l, r) с a[i] < x; n, если такого индекса нет.
+// Требуется 0 <= l <= r <= n.
+inline int FirstBelow(int l, int r, int x) {
+  if (l == r) {
+    return n;
+  }
+  return segment_tree_detail::FirstBelow(1, 0, base, l, r, x);
+}

@@ -15,3 +15,7 @@ set_target_properties(segment_tree_example PROPERTIES CXX_EXTENSIONS OFF)
 add_executable(range_add_min_example range_add_min_example.cpp)
 target_compile_features(range_add_min_example PRIVATE cxx_std_20)
 set_target_properties(range_add_min_example PROPERTIES CXX_EXTENSIONS OFF)
+
+add_executable(frequency_tree_example frequency_tree_example.cpp)
+target_compile_features(frequency_tree_example PRIVATE cxx_std_20)
+set_target_properties(frequency_tree_example PROPERTIES CXX_EXTENSIONS OFF)
