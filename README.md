@@ -16,8 +16,15 @@ algorithms/
     example.cpp                # компилируемый пример использования
     test.cpp                   # тесты реализации
     CMakeLists.txt              # цели сборки и регистрация теста в CTest
+  compress_coordinates/
+    description.typ            # сжатие координат: описание и листинги
+    compress_coordinates.h     # самостоятельная реализация
+    example.cpp                # компилируемый пример использования
+    test.cpp                   # тесты прямого и обратного отображения
+    CMakeLists.txt              # цели сборки и регистрация теста в CTest
   scc/                         # компоненты сильной связности (Косарайю)
   two_sat/                     # 2-SAT на основе SCC
+  number_theory/               # простые, делители, phi/mu, НОД и CRT
   geometry/                    # целочисленная 2D-геометрия
 CMakeLists.txt                 # подключение модулей с тестами
 .github/workflows/ci.yml        # тесты и PDF для PR и main
@@ -34,9 +41,14 @@ cmake --build build --parallel
 ctest --test-dir build --output-on-failure
 ```
 
-Вместе с тестами компилируются примеры `fixed_set_example`, `scc_example`
+Вместе с тестами компилируются примеры `fixed_set_example`,
+`compress_coordinates_example`, `scc_example`
 и `two_sat_example`. Модули [SCC](algorithms/scc/README.md) и
 [2-SAT](algorithms/two_sat/README.md) содержат описание интерфейса и применения.
+Раздел [теории чисел](algorithms/number_theory/README.md) включает четыре
+самостоятельных заголовка, четыре теста и компилируемые примеры.
+Для его 64-битной арифметики нужен GCC/Clang с `__uint128_t` и `__int128_t`.
+
 Раздел [геометрии](algorithms/geometry/README.md) содержит точки и векторы,
 прямые и отрезки, осевые прямоугольники, многоугольники и выпуклую оболочку.
 Его четыре примера также компилируются, а тесты запускаются через CTest.
