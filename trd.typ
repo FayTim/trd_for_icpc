@@ -32,6 +32,10 @@
 
 #pagebreak(weak: true)
 
+#include "algorithms/graphs/euler.typ"
+
+#pagebreak(weak: true)
+
 #include "algorithms/scc/description.typ"
 
 #pagebreak(weak: true)

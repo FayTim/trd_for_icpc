@@ -12,10 +12,15 @@ add_executable(graphs_example example.cpp)
 target_compile_features(graphs_example PRIVATE cxx_std_20)
 set_target_properties(graphs_example PROPERTIES CXX_EXTENSIONS OFF)
 
+add_executable(euler_test euler_test.cpp)
+add_test(NAME euler COMMAND euler_test)
+set_tests_properties(euler PROPERTIES TIMEOUT 60)
+add_executable(euler_example euler_example.cpp)
+
 # Each public header is compiled without preceding includes. Linking these
 # objects with test.cpp also catches definitions that violate the ODR.
 set(graphs_header_sources)
-foreach(header inf dfs bfs dijkstra bellman floyd toposort dsu kruskal bridges lca ternary)
+foreach(header inf dfs bfs dijkstra bellman floyd toposort dsu kruskal bridges lca ternary euler)
     set(source "${CMAKE_CURRENT_BINARY_DIR}/${header}_standalone.cpp")
     file(WRITE "${source}" "#include \"${header}.h\"\n")
     list(APPEND graphs_header_sources "${source}")
