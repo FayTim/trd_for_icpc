@@ -1,9 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
-using ll = long long;
-#define all(x) (x).begin(), (x).end()
-const ll INF = 4e18;
-
+#include "inf.h"
 #include <cmath>
 #include <iostream>
 
@@ -11,33 +6,17 @@ const ll INF = 4e18;
 #include "kruskal.h"
 #include "ternary.h"
 
-// В разных файлах совпадают имена (n, g, dfs, ...): подключаем их в свои пространства имён.
-namespace dfs_h {
 #include "dfs.h"
-}
-namespace bfs_h {
 #include "bfs.h"
-}
-namespace dijkstra_h {
 #include "dijkstra.h"
-}
-namespace bellman_h {
 #include "bellman.h"
-}
-namespace floyd_h {
 #include "floyd.h"
-}
-namespace toposort_h {
 #include "toposort.h"
-}
-namespace bridges_h {
 #include "bridges.h"
-}
-namespace lca_h {
 #include "lca.h"
-}
 
 signed main() {
+  using graph_constants::INF;
   {  // DFS
     dfs_h::n = 5;
     dfs_h::g = {{1}, {0}, {3}, {2}, {}};
@@ -53,7 +32,7 @@ signed main() {
     std::cout << '\n';
   }
   {  // Дейкстра
-    std::vector<std::vector<std::pair<int, int>>> g = {
+    std::vector<std::vector<std::pair<int, ll>>> g = {
         {{1, 4}, {2, 1}}, {{3, 1}}, {{1, 2}, {3, 5}}, {}};
     std::cout << dijkstra_h::dijkstra(0, g)[3] << '\n';  // 4
   }
@@ -90,7 +69,7 @@ signed main() {
       ++id;
     }
     bridges_h::run();
-    std::cout << bridges_h::bridges[0] << ' ' << bridges_h::cut[2] << '\n';  // 3 1
+    std::cout << bridges_h::bridges[0] << ' ' << static_cast<int>(bridges_h::cut[2]) << '\n';  // 3 1
   }
   {  // LCA
     lca_h::n = 5;

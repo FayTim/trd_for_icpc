@@ -1,8 +1,5 @@
 #pragma once
-#include <bits/stdc++.h>
-using namespace std;
 using ll = long long;
-#define all(x) (x).begin(), (x).end()
 
 // минимум унимодальной f на [l, r] (строго убывает, затем строго возрастает)
 template <class F> double ternMin(double l, double r, F f, int it = 100) {

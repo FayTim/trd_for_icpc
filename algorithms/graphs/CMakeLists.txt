@@ -11,3 +11,16 @@ set_tests_properties(graphs PROPERTIES TIMEOUT 60)
 add_executable(graphs_example example.cpp)
 target_compile_features(graphs_example PRIVATE cxx_std_20)
 set_target_properties(graphs_example PROPERTIES CXX_EXTENSIONS OFF)
+
+# Each public header is compiled without preceding includes. Linking these
+# objects with test.cpp also catches definitions that violate the ODR.
+set(graphs_header_sources)
+foreach(header inf dfs bfs dijkstra bellman floyd toposort dsu kruskal bridges lca ternary)
+    set(source "${CMAKE_CURRENT_BINARY_DIR}/${header}_standalone.cpp")
+    file(WRITE "${source}" "#include \"${header}.h\"\n")
+    list(APPEND graphs_header_sources "${source}")
+endforeach()
+add_library(graphs_header_checks OBJECT ${graphs_header_sources})
+target_compile_features(graphs_header_checks PRIVATE cxx_std_20)
+target_include_directories(graphs_header_checks PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}")
+target_sources(graphs_test PRIVATE $<TARGET_OBJECTS:graphs_header_checks>)

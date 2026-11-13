@@ -1,13 +1,14 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <numeric>
+#include <vector>
 using namespace std;
 using ll = long long;
-#define all(x) (x).begin(), (x).end()
 
 struct DSU {
     vector<int> p, sz;
     DSU(int n) : p(n), sz(n, 1) {
-        iota(all(p), 0);
+        iota(p.begin(), p.end(), 0);
     }
     int f(int x) {
         return p[x] == x ? x : p[x] = f(p[x]);

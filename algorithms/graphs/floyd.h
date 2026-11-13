@@ -1,13 +1,16 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <vector>
 #include "inf.h"
+
+namespace floyd_h {
 using namespace std;
 using ll = long long;
-#define all(x) (x).begin(), (x).end()
+using graph_constants::INF;
 
 // d[i][i] = 0, d[i][j] = w (min по кратным), INF если ребра нет
 // после: d[i][j] — расстояние; d[i][i] < 0 — i на отрицательном цикле
-void floyd(vector<vector<ll>>& d) {
+inline void floyd(vector<vector<ll>>& d) {
     int n = d.size();
     for (int k = 0; k < n; k++)
         for (int i = 0; i < n; i++) if (d[i][k] < INF)
@@ -22,3 +25,5 @@ void floyd(vector<vector<ll>>& d) {
                 }
             
 }
+
+}  // namespace floyd_h

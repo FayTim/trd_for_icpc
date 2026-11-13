@@ -1,21 +1,23 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <vector>
+
+namespace dfs_h {
 using namespace std;
 using ll = long long;
 
-int n, T;
-vector<vector<int>> g;
-vector<int> tin, tout;
+inline int n, T;
+inline vector<vector<int>> g;
+inline vector<int> tin, tout;
 
-void dfs(int v) {
+inline void dfs(int v) {
     tin[v] = T++;
     for (int to : g[v]) if (tin[to] < 0) dfs(to);
     tout[v] = T++;
 }
-bool anc(int a, int b) { return tin[a] <= tin[b] && tout[b] <= tout[a]; }
+inline bool anc(int a, int b) { return tin[a] <= tin[b] && tout[b] <= tout[a]; }
 
 // компоненты связности (неориентированный), итеративно
-int components(vector<int>& comp) {
+inline int components(vector<int>& comp) {
     comp.assign(n, -1); int c = 0;
     for (int s = 0; s < n; s++) if (comp[s] < 0) {
         vector<int> st = {s};
@@ -34,7 +36,7 @@ int components(vector<int>& comp) {
     return c;
 }
 
-bool cyc(int v, vector<int>& col) {
+inline bool cyc(int v, vector<int>& col) {
     col[v] = 1;
     for (int to : g[v]) {
         if (col[to] == 1) return 1;
@@ -43,3 +45,5 @@ bool cyc(int v, vector<int>& col) {
     col[v] = 2;
     return 0;
 }
+
+}  // namespace dfs_h

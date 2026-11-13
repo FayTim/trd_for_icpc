@@ -1,11 +1,17 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <array>
+#include <queue>
+#include <vector>
+#include "inf.h"
+
+namespace bellman_h {
 using namespace std;
 using ll = long long;
+using graph_constants::INF;
 
 // e[i] = {a, b, w} (ориентированное ребро a -> b), w любой знак
 // true: из s достижим отрицательный цикл (d неверны); иначе d[v] = расстояние (INF если недостижима)
-bool bellman(int n, int s, vector<array<ll, 3>>& e, vector<ll>& d) {
+inline bool bellman(int n, int s, vector<array<ll, 3>>& e, vector<ll>& d) {
     vector<__int128> dist(n, INF);
     dist[s] = 0;
 
@@ -64,3 +70,5 @@ bool bellman(int n, int s, vector<array<ll, 3>>& e, vector<ll>& d) {
 
     return !bad.empty();
 }
+
+}  // namespace bellman_h

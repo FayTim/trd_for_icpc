@@ -1,11 +1,17 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <climits>
+#include <deque>
+#include <queue>
+#include <utility>
+#include <vector>
+
+namespace bfs_h {
 using namespace std;
 using ll = long long;
-#define all(x) (x).begin(), (x).end()
 
 // d[v] = расстояние до ближайшего источника (-1 если нет пути), par[v] = предок (-1 у источников)
-vector<int> bfs(const vector<int>& src, vector<vector<int>>& g, vector<int>& par) {
+inline vector<int> bfs(const vector<int>& src, vector<vector<int>>& g, vector<int>& par) {
     vector<int> d(g.size(), -1);
     par.assign(g.size(), -1);
     queue<int> q;
@@ -22,16 +28,16 @@ vector<int> bfs(const vector<int>& src, vector<vector<int>>& g, vector<int>& par
     }
     return d;
 }
-vector<int> path(int t, vector<int>& d, vector<int>& par) {
+inline vector<int> path(int t, vector<int>& d, vector<int>& par) {
     if (d[t] < 0) return {};
     vector<int> p;
     for (int v = t; v != -1; v = par[v]) p.push_back(v);
-    reverse(all(p));
+    reverse(p.begin(), p.end());
     return p;
 }
 
 // 0-1 BFS: g[v] = {to, w}, w in {0, 1}; недостижимые = INT_MAX
-vector<int> bfs01(int s, vector<vector<pair<int, int>>>& g) {
+inline vector<int> bfs01(int s, vector<vector<pair<int, int>>>& g) {
     vector<int> d(g.size(), INT_MAX);
     deque<int> q = {s}; d[s] = 0;
     while (!q.empty()) {
@@ -46,3 +52,5 @@ vector<int> bfs01(int s, vector<vector<pair<int, int>>>& g) {
     }
     return d;
 }
+
+}  // namespace bfs_h

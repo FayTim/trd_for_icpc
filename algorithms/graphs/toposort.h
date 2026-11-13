@@ -1,11 +1,13 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <queue>
+#include <vector>
+
+namespace toposort_h {
 using namespace std;
 using ll = long long;
-#define all(x) (x).begin(), (x).end()
 
 // порядок вершин ориентированного графа; пустой вектор, если есть цикл
-vector<int> toposort(vector<vector<int>>& g) {
+inline vector<int> toposort(vector<vector<int>>& g) {
     int n = g.size();
     vector<int> deg(n), res;
     for (int v = 0; v < n; v++)
@@ -25,3 +27,5 @@ vector<int> toposort(vector<vector<int>>& g) {
     if ((int)res.size() != n) res.clear();
     return res;
 }
+
+}  // namespace toposort_h

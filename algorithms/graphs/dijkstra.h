@@ -1,12 +1,17 @@
 #pragma once
-#include <bits/stdc++.h>
+#include <functional>
+#include <queue>
+#include <utility>
+#include <vector>
+#include "inf.h"
+
+namespace dijkstra_h {
 using namespace std;
 using ll = long long;
-#define all(x) (x).begin(), (x).end()
-const ll INF = 4e18;
+using graph_constants::INF;
 
 // g[v] = {to, w}, w >= 0. d[v] = INF если недостижима. par (необязательно) — для восстановления пути
-vector<ll> dijkstra(int s, vector<vector<pair<int, int>>>& g, vector<int>* par = nullptr) {
+inline vector<ll> dijkstra(int s, vector<vector<pair<int, ll>>>& g, vector<int>* par = nullptr) {
     vector<ll> d(g.size(), INF);
     if (par) par->assign(g.size(), -1);
     priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<>> pq;
@@ -16,6 +21,7 @@ vector<ll> dijkstra(int s, vector<vector<pair<int, int>>>& g, vector<int>* par =
         pq.pop();
         if (dv > d[v]) continue;
         for (auto [to, w] : g[v]) {
+            if (w >= INF - dv) continue;  // сумма >= INF, без переполнения
             if (d[to] > dv + w) {
                 d[to] = dv + w;
                 if (par) (*par)[to] = v;
@@ -25,3 +31,5 @@ vector<ll> dijkstra(int s, vector<vector<pair<int, int>>>& g, vector<int>* par =
     }
     return d;
 }
+
+}  // namespace dijkstra_h

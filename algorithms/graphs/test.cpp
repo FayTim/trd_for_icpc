@@ -1,5 +1,7 @@
 #include "inf.h"
 #include <iostream>
+#include <cmath>
+#include <climits>
 #include <random>
 #include <set>
 #include <stdexcept>
@@ -8,38 +10,22 @@
 #include "kruskal.h"
 #include "ternary.h"
 
-// В разных файлах совпадают имена (n, g, dfs, ...): подключаем их в свои пространства имён.
-namespace dfs_h {
 #include "dfs.h"
-}
-namespace bfs_h {
 #include "bfs.h"
-}
-namespace dijkstra_h {
 #include "dijkstra.h"
-}
-namespace bellman_h {
 #include "bellman.h"
-}
-namespace floyd_h {
 #include "floyd.h"
-}
-namespace toposort_h {
 #include "toposort.h"
-}
-namespace bridges_h {
 #include "bridges.h"
-}
-namespace lca_h {
 #include "lca.h"
-}
 
 namespace {
 
+using graph_constants::INF;
 using Matrix = std::vector<std::vector<ll>>;
 using Edges = std::vector<std::array<ll, 3>>;
 using Graph = std::vector<std::vector<int>>;
-using WeightedGraph = std::vector<std::vector<std::pair<int, int>>>;
+using WeightedGraph = std::vector<std::vector<std::pair<int, ll>>>;
 
 std::mt19937 random_engine(20260512);
 
@@ -197,6 +183,12 @@ void TestBfs() {
 }
 
 void TestDijkstra() {
+  WeightedGraph wide = {{{1, 3000000000LL}}, {{2, 4000000000LL}}, {}};
+  Require(dijkstra_h::dijkstra(0, wide) == std::vector<ll>({0, 3000000000LL, 7000000000LL}),
+          "Dijkstra must accept 64-bit weights and distances");
+  WeightedGraph near_inf = {{{1, INF - 1}}, {{2, INF - 1}}, {}};
+  Require(dijkstra_h::dijkstra(0, near_inf)[2] == INF,
+          "A sum beyond INF must not overflow into a shorter distance");
   WeightedGraph g = {{{1, 4}, {2, 1}}, {{3, 1}}, {{1, 2}, {3, 5}}, {}, {}};
   std::vector<int> par;
   auto d = dijkstra_h::dijkstra(0, g, &par);
@@ -342,6 +334,16 @@ void TestDsu() {
 }
 
 void TestKruskal() {
+  auto large = kruskal(4, {{1000000000LL, 0, 1}, {1000000000LL, 1, 2},
+                           {1000000000LL, 2, 3}});
+  Require(large == std::pair<ll, int>{3000000000LL, 3}, "MST sum must not overflow int");
+  auto signed_sum = kruskal(4, {{-6000000000000000000LL, 0, 1},
+                               {-6000000000000000000LL, 1, 2},
+                               {6000000000000000000LL, 2, 3}});
+  Require(signed_sum == std::pair<ll, int>{-6000000000000000000LL, 3},
+          "MST prefix sums may exceed ll even when the final sum fits");
+  auto wide = kruskal(2, {{5000000000LL, 0, 1}});
+  Require(wide == std::pair<ll, int>{5000000000LL, 1}, "MST must accept 64-bit edge weights");
   auto [weight, count] = kruskal(3, {{1, 0, 1}, {2, 1, 2}, {3, 0, 2}});
   Require(weight == 3 && count == 2, "Spanning tree differs");
   auto [forest_weight, forest_count] = kruskal(4, {{1, 0, 1}, {2, 1, 2}, {3, 0, 2}});
@@ -353,7 +355,7 @@ void TestKruskal() {
 
   for (int trial = 0; trial < 1000; ++trial) {
     int n = Rand(1, 6), m = Rand(0, 9);
-    std::vector<std::array<int, 3>> edges;  // {w, a, b}
+    std::vector<std::array<ll, 3>> edges;  // {w, a, b}
     for (int i = 0; i < m; ++i) edges.push_back({Rand(-5, 10), Rand(0, n - 1), Rand(0, n - 1)});
     DSU all_edges(n);
     int components = n;
@@ -432,6 +434,13 @@ void TestBridges() {
 }
 
 void TestLca() {
+  lca_h::n = 2;
+  lca_h::g = {{1}, {0}};
+  lca_h::build(0);
+  Require(lca_h::kth(1, 1 << lca_h::LOG) == 0 && lca_h::kth(1, INT_MAX) == 0,
+          "Large k must return the root, not ignore its high bits");
+  lca_h::build(1);
+  Require(lca_h::kth(0, INT_MAX) == 1, "Large k must respect a nonzero root");
   lca_h::n = 1;
   lca_h::g = {{}};
   lca_h::build(0);
