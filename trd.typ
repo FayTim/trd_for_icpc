@@ -75,14 +75,6 @@
   }).flatten(),
 )
 
-*Перенос в решение.* Стандарт — C++20. Скопируйте нужный заголовок перед
-`main`, сохранив его стандартные подключения. Локальные строки
-`#include "...h"` замените самими напечатанными зависимостями в указанном
-порядке; при объединении в один файл `#pragma once` не требуется.
-Показанные примеры содержат отдельные `main`: выбирайте один и подставляйте
-ввод своей задачи. Раздел «модификации» описывает изменения базового
-алгоритма; применяйте их только при явно указанных предпосылках.
-
 // Keep a chapter-local address and the global page number in each entry.
 #show outline.entry: it => context {
   let target = it.element.location()
@@ -110,12 +102,9 @@
 
 #include "algorithms/fixed_set/description.typ"
 
-
 #include "algorithms/segment_tree/description.typ"
 
-
 #include "algorithms/fenwick_tree/description.typ"
-
 
 #pagebreak(weak: true)
 
@@ -123,15 +112,11 @@
 
 #include "algorithms/graphs/description.typ"
 
-
 #include "algorithms/graphs/euler.typ"
-
 
 #include "algorithms/scc/description.typ"
 
-
 #include "algorithms/two_sat/description.typ"
-
 
 #pagebreak(weak: true)
 
@@ -144,10 +129,8 @@
 #include "algorithms/bitmask_dp/description.typ"
 #include "algorithms/tree_dp/description.typ"
 
-
 #include "algorithms/interval_dp/description.typ"
 #include "algorithms/knuth_dp/description.typ"
-
 
 #pagebreak(weak: true)
 
@@ -155,7 +138,6 @@
 
 #include "algorithms/z_function/description.typ"
 #include "algorithms/polynomial_hashes/description.typ"
-
 
 #pagebreak(weak: true)
 
@@ -167,13 +149,11 @@
 
 #include "algorithms/compress_coordinates/description.typ"
 
-
 #pagebreak(weak: true)
 
 = Теория чисел
 
 #include "algorithms/number_theory/description.typ"
-
 
 #pagebreak(weak: true)
 
@@ -187,11 +167,8 @@
 
 #include "algorithms/geometry/description.typ"
 
-
 #include "algorithms/geometry/segments.typ"
 
-
 #include "algorithms/geometry/rectangles.typ"
-
 
 #include "algorithms/geometry/polygons.typ"
