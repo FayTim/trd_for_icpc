@@ -18,6 +18,7 @@
 #include "toposort.h"
 #include "bridges.h"
 #include "lca.h"
+#include "euler.h"
 
 namespace {
 
